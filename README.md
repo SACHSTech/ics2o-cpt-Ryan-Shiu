@@ -51,7 +51,7 @@ hat_trick_background_image = pygame.image.load("hat trick.webp").convert()
 stanley_cup_background_image = pygame.image.load("stanley_cup_background.webp").convert()
 stanley_cup_image = pygame.image.load("stanley cup.png").convert_alpha()
 hockey_hall_of_fame_image = pygame.image.load("hockey hall of fame.png").convert_alpha()
-hockey_hall_of_fame_background = pygame.image.load("hockey hall of fame.webp")
+hockey_hall_of_fame_background = pygame.image.load("hockey hall of fame.jpg")
 
 #Buttons
 home_button_image = pygame.image.load("home button.png").convert_alpha()
@@ -72,7 +72,7 @@ next_button = pygame.image.load("next.png").convert_alpha()
 background_position = [0,7]
 background_position2 = [34,10]
 stanley_cup_background_position = [65,7]
-hockey_hall_of_fame_background_position = [70,0]
+hockey_hall_of_fame_background_position = [0,0]
 
 
 
@@ -84,6 +84,7 @@ false_switch = 0
 contract_switch = 0
 double_points_switch = 0
 sponsor_text_switch = 0
+question_number = 1
 
 
 #select the font, size, and italics
@@ -91,12 +92,11 @@ font = pygame.font.SysFont('Calibri', 18, True, False)
 score_text = font.render(str(score) , True, WHITE)
 #Blank text to swap for actual text
 blank_text = font.render(" " , True , WHITE)
-blank_text_true = font.render(" " , True , WHITE)
-blank_text_false = font.render(" ", True, WHITE)
-blank_text_true2 = font.render(" " , True , WHITE)
-blank_text_false2 = font.render(" ", True, WHITE)
+#Questions 
 question_1 = font.render("Trojan is the least dangerous malware." , True , WHITE)
 question_2 = font.render("Will this have an error?: print(''hi'')" , True , WHITE)
+question_3 = font.render("Is 1 byte 8 bits?" , True ,WHITE)
+question_4 = font.render("Do booleans use true and false?" , True, WHITE)
 sponsor_text = font.render("Congratulations you have recieved a sponsorship from Malware inc. " , True , WHITE)
 sponsor_text2 = font.render("Your clicks are now worth double. Answer questions to earn 50 points each" , True , WHITE)
 
@@ -104,8 +104,15 @@ blank_sponsor_text = font.render(" ", True, WHITE)
 blank_sponsor_text2 = font.render(" ", True, WHITE)
 blank_sponsor_text3 = font.render(" ", True, WHITE)
 blank_sponsor_text4 = font.render(" ", True, WHITE)
-answer_true = font.render("WRONG -50 points", True, WHITE)
-answer_false = font.render("CORRECT +50 points", True, WHITE)
+answer_wrong = font.render("WRONG 0 points", True, WHITE)
+answer_correct = font.render("CORRECT +50 points", True, WHITE)
+
+# Possible answer text
+answer = font.render(" ", True, WHITE)
+answer_blank_text = font.render(" ", True, WHITE)
+correct_text = font.render("CORRECT +50 points", True, WHITE)
+wrong_text = font.render("WRONG 0 points", True, WHITE)
+
 lost_achievements = font.render("Score under 10, lost achievements" , True ,  WHITE)
 
 
@@ -171,7 +178,7 @@ while not done:
           x = pos[0]
           y = pos[1]
           if x>530 and x<700 and y>245 and y<375:
-           score = score + 1
+           score = score + 100
            contract_switch = 1
 
           if contract_switch > 0 and score>=10 and x>0 and x<100 and y>385 and y<500:
@@ -206,58 +213,89 @@ while not done:
           if double_points_switch == 1 and x>530 and x<700 and y>245 and y<375:
            score = score + 1
 
-          if true_switch>0 and x>286 and x<314 and y>86 and y<114:
-            score = score - 50
-            blank_text_true = answer_true
+# for question 1
+          if question_number == 1 and true_switch>0 and x>286 and x<314 and y>86 and y<114:
+            score = score - 0
+            answer = wrong_text
             true_switch = 0
-            
+            print("wrong1")
 
-          if false_switch>0 and x>486 and x<514 and y>86 and y<114:
+          if question_number == 1 and false_switch>0 and x>486 and x<514 and y>86 and y<114:
             score = score + 50
-            blank_text_false = answer_false
-            false_switch = 0
-            
 
+            answer = correct_text
+            false_switch = 0
+            print("correct1")
+
+# for question 2            
+
+          if question_number == 2 and true_switch>0 and x>286 and x<314 and y>86 and y<114:
+            score = score - 0
+            answer = wrong_text
+            true_switch = 0
+            print("wrong2")
+
+          if question_number == 2 and false_switch>0 and x>486 and x<514 and y>86 and y<114:
+            score = score + 50
+            answer = correct_text
+            false_switch = 0
+            print("correct2")
+
+# for question 3 
+          if question_number == 3 and true_switch>0 and x>286 and x<314 and y>86 and y<114:
+            score = score + 50
+            answer = correct_text
+            false_switch = 0
+            print("correct3")
+
+          if question_number == 3 and false_switch>0 and x>486 and x<514 and y>86 and y<114:
+            score = score - 0
+            answer = wrong_text
+            true_switch = 0
+            print("wrong3")
+
+# for question 4
+          if question_number == 4 and true_switch>0 and x>286 and x<314 and y>86 and y<114:
+            score = score + 50
+            answer = correct_text
+            false_switch = 0
+            print("correct3")
+
+          if question_number == 4 and false_switch>0 and x>486 and x<514 and y>86 and y<114:
+            score = score - 0
+            answer = wrong_text
+            true_switch = 0
+            print("wrong3")
+
+
+
+
+# for spnosor text
           if x>280 and x<330 and y>210 and y<265:
             blank_sponsor_text = sponsor_text
             sponsor_text = blank_sponsor_text3
             blank_sponsor_text2 = sponsor_text2
             sponsor_text2 = blank_sponsor_text4
 
+#Next button for next question
           if x>365 and x<470 and y>90 and y<140:
-            answer_false = blank_text_false
-            blank_text_false = blank_text_false2
-            answer_true = blank_text_true
-            blank_text_true = blank_text_true2
-            
-          #Next button for next question
-          if x>365 and x<470 and y>90 and y<140:
+            answer = answer_blank_text
             question_1 = blank_text
             blank_text = question_2
+            question_2 = question_3
+            question_3 = question_4
             true_switch = 1
             false_switch = 1
-
+            question_number = question_number + 1
  
 
-          if true_switch>0 and x>286 and x<314 and y>86 and y<114:
-            blank_text_true2 = blank_text_true
-            blank_text_true = answer_true
-            score = score - 50
-            true_switch = 0
-            
-
-          if false_switch>0 and x>486 and x<514 and y>86 and y<114:
-            blank_text_false2 = blank_text_false
-            blank_text_false = answer_false
-            score = score + 50
-            false_switch = 0
 
             #put rest of the questions here not after hockey hall of fame
 
 
             
 
-          if score >= 1 and x>570 and x<630 and y>400 and y<500:
+          if score >= 500 and x>570 and x<630 and y>400 and y<500:
             background_image = hockey_hall_of_fame_background
             screen.blit(hockey_hall_of_fame_background, hockey_hall_of_fame_background_position)
             print("hello")
@@ -295,14 +333,9 @@ while not done:
     screen.blit(blank2_image, [blank2_x, blank2_y])
     screen.blit(player_image, [player_x, player_y])
     screen.blit(blank_text, [250,25])
-    screen.blit(blank_text_true, [300,125])
-    screen.blit(blank_text_false, [500,120])
-    screen.blit(blank_text_true2, [300,125])
-    screen.blit(blank_text_false2, [500,120])
     screen.blit(blank_sponsor_text, [1,175])
     screen.blit(blank_sponsor_text2, [1,205])
-    screen.blit(blank_sponsor_text3, [1,175])
-    screen.blit(blank_sponsor_text4, [1,205])
+    screen.blit(answer, [250,50])
     if score >= 10:
       screen.blit(contract_image, [contract_x, contract_y])
       
@@ -320,7 +353,7 @@ while not done:
       screen.blit(remove_image, [remove_image_x, remove_image_y])
       screen.blit(next_button, [next_x, next_y])
 
-    if score >= 1:
+    if score >= 500:
       screen.blit(hockey_hall_of_fame_image, [hockey_hall_of_fame_x, hockey_hall_of_fame_y] )
     
     screen.blit(player_image, [player_x, player_y])
